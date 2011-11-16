@@ -2,7 +2,7 @@ var source = {};
 var userData = {};
 userData.rawData = [];
 
-var app = {};
+var slideList = [];
 
 var slidePositions = [
   $('#td-test-top-1'),
@@ -139,7 +139,17 @@ source.PICS = {
 
 var Slide = function(node){
   this.node = node;
+  this.hidden = true;
+  node.hide();
 };
+
+Slide.prototype.hideSlide = function() {
+  this.node.hide();
+}
+
+Slide.prototype.showSlide = function() {
+  this.node.show();
+}
 
 Slide.prototype.populateTest = function(arr) {
   var wordArr;
@@ -152,6 +162,15 @@ Slide.prototype.populateTest = function(arr) {
     }
   }
 };
+
+function showSlide(targetSlide) {
+  for(var i = 0; i < slideList.length; i++) {
+    slideList[i].hideSlide();
+    if(slideList[i] == targetSlide) {
+      targetSlide.showSlide();
+    }
+  }
+}
 
 // Returns the word lowercased + .jpg
 // Test by: console.log(getURL(source.PICS.transportation[0]) == 'car.jpg');
@@ -237,12 +256,17 @@ $(document).ready(function() {
   var currentSource = sourceArray[0];
 
   var slideMain = new Slide($('#test-slide'));
-  var slideInput = $('#input-slide');
+  var slideInfo = new Slide($('#info-slide'));
+  var slideInput = new Slide($('#input-slide'));
 
-  // slideMain.hide();
-  slideInput.hide();
+  slideList.push(slideMain, slideInput, slideInfo); // Add slides to our slidelist so we can keep track of it.
+
+ // slideInput.hideSlide();
 
   slideMain.populateTest(currentSource);
+
+  showSlide(slideInfo);
+  showSlide(slideMain);
 
   var inputButton = $('#input-form-submit');
   inputButton.live('click', function() {
