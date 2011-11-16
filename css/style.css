@@ -1,13 +1,26 @@
 /* =============================================================================
-   Text Styles
+   General Styles
    ========================================================================== */
 /* For table height */
-html, body, #container, .slide, #stage {
+html, body, #container, #main, .slide, table {
    height: 100%;
    overflow: hidden;
+   color: #111;
 }
 
-#stage {
+p span {
+   color: #444;
+   font-size: 0.85em;
+}
+
+/* =============================================================================
+   Test Styles
+   ========================================================================== */
+.slide {
+   position: relative;
+}
+
+#input-table {
    text-align: center;
    width: 100%;
    font-size: 3.5em;
@@ -17,7 +30,48 @@ html, body, #container, .slide, #stage {
    background: #EEE;
 }
 
-td {
+#test-table td {
    background: gray;
-   border: 5px solid white;
+}
+
+/* =============================================================================
+   Input Form
+   ========================================================================== */
+#input-form-instruction {
+   width: 500px;   
+   height: 100px;
+   position: absolute;
+   text-align: center;
+   font-size: 2em;
+   left: 50%;
+   top: 50%;
+   margin-left: -250px;
+   margin-top: -50px;
+   border: 1px solid #AAA;
+   background: rgba(255,255,255,0.5);
+}
+
+#input-form-instruction p {
+   margin: 0.5em;
+}
+
+#input-slide {
+   line-height: 1;
+}
+
+#input-slide td:hover {
+   background: #DDD;
+   cursor: pointer;
+}
+
+#input-slide input {
+   text-align: center;
+   width: 100%;
+   height: 100%;
+   border: 0;
+}
+
+#input-slide input:hover {
+   border: 0;
+   outline: 0;
 }

@@ -16,18 +16,38 @@
 <body>
 
 <div id="container">
-	<div id="main" class="slide" role="main">
-    <table id="stage">
-      <tr id="trow-top">
-        <td><p id="td-top-1">Top 1</p></td>
-        <td><p id="td-top-2">Top 2</p></td>
-        <td><p id="td-top-3">Top 3</p></td>
-      </tr>
-      <tr id="trow-bottom">
-        <td><p id="td-bottom-1">Bottom 1</p></td>
-        <td><p id="td-bottom-2">Bottom 2</p></td>
-        <td><p id="td-bottom-3">Bottom 3</p></td>
-      </tr>
+	<div id="main" role="main">
+    <div id="test-slide" class="slide">
+      <table id="test-table">
+        <tr id="trow-top">
+          <td><p id="td-test-top-1">Top 1</p></td>
+          <td><p id="td-test-top-2">Top 2</p></td>
+          <td><p id="td-test-top-3">Top 3</p></td>
+        </tr>
+        <tr id="trow-bottom">
+          <td><p id="td-test-bottom-1">Bottom 1</p></td>
+          <td><p id="td-test-bottom-2">Bottom 2</p></td>
+          <td><p id="td-test-bottom-3">Bottom 3</p></td>
+        </tr>
+      </table>
+    </div>
+    <div id="input-slide" class="slide">
+      <table id="input-table">
+        <tr id="input-top">
+          <td><input type="text" id="td-input-top-1" placeholder="-" tabindex="1" /></td>
+          <td><input type="text" id="td-input-top-2" placeholder="-" tabindex="2" /></td>          
+          <td><input type="text" id="td-input-top-3" placeholder="-" tabindex="3" /></td>
+        </tr>
+        <tr id="trow-bottom">
+          <td><input type="text" id="td-input-bottom-1" placeholder="-" tabindex="4" /></td>
+          <td><input type="text" id="td-input-bottom-2" placeholder="-" tabindex="5" /></td>
+          <td><input type="text" id="td-input-bottom-3" placeholder="-" tabindex="6" /></td>
+        </tr>
+      </table>
+      <div id="input-form-instruction">
+        <p>Fill in as many as you remember. <span>Order does not matter.</span></p>
+      </div>
+    </div>
 	</div>
 </div> <!--! end of #container -->
 

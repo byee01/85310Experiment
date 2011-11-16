@@ -2,6 +2,7 @@ var source = {};
 
 source.WORDS = {
   transportation: [
+    'word',
     'Bicycle',
     'Truck',
     'Train',
@@ -11,6 +12,7 @@ source.WORDS = {
   ],
 
   household: [
+    'word',
     'Microwave',
     'Toaster',
     'Doorbell',
@@ -20,6 +22,7 @@ source.WORDS = {
   ],
 
   bathroom: [
+    'word',
     'Makeup',
     'Mirror',
     'Bathtub',
@@ -29,6 +32,7 @@ source.WORDS = {
   ],
 
   food: [
+    'word',
     'Mango',
     'Orange',
     'Watermelon',
@@ -38,6 +42,7 @@ source.WORDS = {
   ],
 
   tools: [
+    'word',
     'Axe',
     'Ruler',
     'Saw',
@@ -47,6 +52,7 @@ source.WORDS = {
   ],
 
   music: [
+    'word',
     'Bell',
     'Organ',
     'Tuba',
@@ -58,6 +64,7 @@ source.WORDS = {
 
 source.PICS = {
   transportation: [
+    'pic',
     'Car',
     'Plane',
     'Sailboat',
@@ -67,6 +74,7 @@ source.PICS = {
   ],
 
   household: [
+    'pic',
     'Iron',
     'TV',
     'Lamp',
@@ -76,6 +84,7 @@ source.PICS = {
   ],
 
   bathroom: [
+    'pic',
     'Pills',
     'Toilet',
     'Scissors',
@@ -85,6 +94,7 @@ source.PICS = {
   ],
 
   food: [
+    'pic',
     'Banana',
     'Celery',
     'Apple',
@@ -94,6 +104,7 @@ source.PICS = {
   ],
 
   tools: [
+    'pic',
     'Screwdriver',
     'Drill',
     'Shovel',
@@ -103,6 +114,7 @@ source.PICS = {
   ],
 
   music: [
+    'pic',
     'Drum',
     'Clarinet',
     'Piano',
@@ -112,6 +124,9 @@ source.PICS = {
   ] 
 }
 
+// Add a 'type' to the array. THIS IS VERY BAD DON'T EVER DO THIS.
+Array.prototype.type = 
+
 // Returns the word lowercased + .jpg
 // Test by: console.log(getURL(source.PICS.transportation[0]) == 'car.jpg');
 function getURL(word) {
@@ -119,8 +134,20 @@ function getURL(word) {
 }
 
 // Returns a new array of a random permutation of the set based off of the Fisher-Yates algo
-function getRandomSet(inputArray) {
-  var arr = inputArray; // Don't know if I need this yet .slice(); // Save a copy of the array
+function randomizeSet(inputArray, slideArray, newArr) {
+  slideArray = slideArray || false;
+  newArr = newArr || false;
+  var arr;
+  if (newArr) { // Save a copy of the array
+    arr = inputArray.slice();
+  } else {
+    arr = inputArray;
+  }
+
+  if (slideArray) {
+    var arrType = arr.shift(); // Pop up off the array type from the top 
+  }
+
   var i = arr.length;
   if (i == 0) return false;
 
@@ -131,13 +158,35 @@ function getRandomSet(inputArray) {
     arr[i] = tempj;
     arr[j] = tempi;
   }
+
+  if (slideArray) {
+    arr.unshift(arrType); // Put the array type back on the top    
+  }
+
   return arr;
+}
+
+function getRandomSlides(wordSource, picSource) {
+  var tempWords = [];
+  for (var category in wordSource) {
+    tempWords.push(randomizeSet(wordSource[category], true, false));
+  }
+
+  var tempPics = [];
+  for (var category in picSource) {
+    tempPics.push(randomizeSet(picSource[category], true, false));
+  }
+
+  return randomizeSet(tempWords.concat(tempPics), false, false);
 }
 
 
 $(document).ready(function() {
-  var slideMain = $('#main');
-  console.log(source.WORDS.transportation);
-  console.log(getRandomSet(source.WORDS.transportation));
-  console.log(source.WORDS.transportation);
+  var slideMain = $('#test-slide');
+  var slideInput = $('#input-slide');
+
+  slideMain.hide();
+
+  var sourceArray = getRandomSlides(source.WORDS, source.PICS);
+  console.log(sourceArray);
 });
