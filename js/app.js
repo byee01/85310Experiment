@@ -2,6 +2,17 @@ var source = {};
 var userData = {};
 userData.rawData = [];
 
+var app = {};
+
+var slidePositions = [
+  $('#td-test-top-1'),
+  $('#td-test-top-2'),
+  $('#td-test-top-3'),
+  $('#td-test-bottom-1'),
+  $('#td-test-bottom-2'),
+  $('#td-test-bottom-3'),
+];
+
 source.WORDS = {
   transportation: [
     'word',
@@ -126,13 +137,27 @@ source.PICS = {
   ] 
 }
 
-// Add a 'type' to the array. THIS IS VERY BAD DON'T EVER DO THIS.
-Array.prototype.type = 
+var Slide = function(node){
+  this.node = node;
+};
+
+Slide.prototype.populateTest = function(arr) {
+  var wordArr;
+  arr.shift() == 'word' ? wordArr = true : wordArr = false;
+  for(var i = 0; i < arr.length; i++) {
+    if(wordArr) {
+      slidePositions[i].html(arr[i]);
+    } else {
+      slidePositions[i].html(createPic(arr[i]));
+    }
+  }
+};
 
 // Returns the word lowercased + .jpg
 // Test by: console.log(getURL(source.PICS.transportation[0]) == 'car.jpg');
-function getURL(word) {
-  return word.toLowerCase() + '.jpg';
+function createPic(word) {
+  //return '<img src="images/' + word.toLowerCase() + '.jpg"/>';
+  return word.toLowerCase() + '.jpg'
 }
 
 // Returns a new array of a random permutation of the set based off of the Fisher-Yates algo
@@ -182,7 +207,7 @@ function getRandomSlides(wordSource, picSource) {
   return randomizeSet(tempWords.concat(tempPics), false, false);
 }
 
-function processTestInput(event) {
+function processTestInput(source) {
   var userInput = [];
 
   var formInputs = [
@@ -201,20 +226,27 @@ function processTestInput(event) {
     userInput.push(formInputs[i].val());
     formInputs[i].val('');
   }
+
+  userData.rawData.push([userInput.slice(), source.slice()]);
+  console.log(userData);
 }
 
 $(document).ready(function() {
-  var slideMain = $('#test-slide');
+  var sourceArray = getRandomSlides(source.WORDS, source.PICS);
+  userData.sourceData = sourceArray;
+  var currentSource = sourceArray[0];
+
+  var slideMain = new Slide($('#test-slide'));
   var slideInput = $('#input-slide');
+
+  // slideMain.hide();
+  slideInput.hide();
+
+  slideMain.populateTest(currentSource);
 
   var inputButton = $('#input-form-submit');
   inputButton.live('click', function() {
-    processTestInput();
+    processTestInput(currentSource);
   });
 
-  slideMain.hide();
-
-  var sourceArray = getRandomSlides(source.WORDS, source.PICS);
-  //console.log(sourceArray);
-  userData.sourceData = sourceArray;
 });

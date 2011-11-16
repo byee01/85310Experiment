@@ -16,7 +16,7 @@ html, body, #container, #main, .slide, table {
    position: relative;
 }
 
-#input-table {
+#test-table {
    text-align: center;
    width: 100%;
    font-size: 3.5em;
