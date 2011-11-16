@@ -234,7 +234,7 @@ function getRandomSlides(wordSource, picSource) {
 $(document).ready(function() {
   var sourceArray = getRandomSlides(source.WORDS, source.PICS);
   userData.sourceData = sourceArray;
-  var currentSource = sourceArray[0];
+  var currentSource = sourceArray[currentIndex];
 
   var slideMain = new Slide($('#test-slide'));
   var slideInfo = new Slide($('#info-slide'));
