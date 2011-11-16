@@ -240,6 +240,7 @@ $(document).ready(function() {
   var slideInfo = new Slide($('#info-slide'));
   var slideInput = new Slide($('#input-slide'));
   var slideBlank = new Slide($('#blank-slide'));
+  var slideResults = new Slide($('#results-slide'));
 
   slideList.push(slideMain, slideInput, slideInfo); // Add slides to our slidelist so we can keep track of it.
 
@@ -265,7 +266,12 @@ $(document).ready(function() {
       setTimeout(function(){ 
         showSlide(slideInput)
       }, 1000);
-    }, 1000);
+    }, 3000);
+  }
+
+  function endTest() {
+    showSlide(slideResults);
+    console.log(userData());
   }
 
   function processTestInput(source) {
@@ -296,7 +302,7 @@ $(document).ready(function() {
       currentIndex++;
       runTest();
     } else {
-      showSlide(slideInfo);
+      endTest();
     }
   }
 });
