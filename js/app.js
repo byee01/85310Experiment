@@ -3,6 +3,7 @@ var userData = {};
 userData.rawData = [];
 
 var slideList = [];
+var currentIndex = 0;
 
 var slidePositions = [
   $('#td-test-top-1'),
@@ -153,7 +154,8 @@ Slide.prototype.showSlide = function() {
 
 Slide.prototype.populateTest = function(arr) {
   var wordArr;
-  arr.shift() == 'word' ? wordArr = true : wordArr = false;
+  var arrType = arr.shift();
+  arrType == 'word' ? wordArr = true : wordArr = false;
   for(var i = 0; i < arr.length; i++) {
     if(wordArr) {
       slidePositions[i].html(arr[i]);
@@ -161,6 +163,7 @@ Slide.prototype.populateTest = function(arr) {
       slidePositions[i].html(createPic(arr[i]));
     }
   }
+  arr.unshift(arrType); // Don't forget to put the array type back!
 };
 
 function showSlide(targetSlide) {
@@ -226,29 +229,7 @@ function getRandomSlides(wordSource, picSource) {
   return randomizeSet(tempWords.concat(tempPics), false, false);
 }
 
-function processTestInput(source) {
-  var userInput = [];
 
-  var formInputs = [
-    $('#td-input-top-1'),
-    $('#td-input-top-2'),
-    $('#td-input-top-3'),
-    $('#td-input-bottom-1'),
-    $('#td-input-bottom-2'),
-    $('#td-input-bottom-3'),
-  ];
-
-  // First, grab all the inputs
-  // Save them to user data
-  // Then clear it
-  for (var i = 0; i < formInputs.length; i++) {
-    userInput.push(formInputs[i].val());
-    formInputs[i].val('');
-  }
-
-  userData.rawData.push([userInput.slice(), source.slice()]);
-  console.log(userData);
-}
 
 $(document).ready(function() {
   var sourceArray = getRandomSlides(source.WORDS, source.PICS);
@@ -258,19 +239,64 @@ $(document).ready(function() {
   var slideMain = new Slide($('#test-slide'));
   var slideInfo = new Slide($('#info-slide'));
   var slideInput = new Slide($('#input-slide'));
+  var slideBlank = new Slide($('#blank-slide'));
 
   slideList.push(slideMain, slideInput, slideInfo); // Add slides to our slidelist so we can keep track of it.
 
  // slideInput.hideSlide();
 
-  slideMain.populateTest(currentSource);
 
   showSlide(slideInfo);
-  showSlide(slideMain);
+
+  $('#input-test-start').live('click', function() {
+    runTest();
+  });
 
   var inputButton = $('#input-form-submit');
   inputButton.live('click', function() {
     processTestInput(currentSource);
   });
 
+  function runTest() {
+    slideMain.populateTest(sourceArray[currentIndex]);
+    showSlide(slideBlank);
+    setTimeout(function(){
+      showSlide(slideMain);
+      setTimeout(function(){ 
+        showSlide(slideInput)
+      }, 1000);
+    }, 1000);
+  }
+
+  function processTestInput(source) {
+    var userInput = [];
+
+    var formInputs = [
+      $('#td-input-top-1'),
+      $('#td-input-top-2'),
+      $('#td-input-top-3'),
+      $('#td-input-bottom-1'),
+      $('#td-input-bottom-2'),
+      $('#td-input-bottom-3'),
+    ];
+
+    // First, grab all the inputs
+    // Save them to user data
+    // Then clear it
+    for (var i = 0; i < formInputs.length; i++) {
+      userInput.push(formInputs[i].val());
+      formInputs[i].val('');
+    }
+
+    userData.rawData.push([userInput.slice(), source.slice()]);
+    console.log(userData);
+
+    // Advance the slide
+    if (currentIndex < slideList.length - 1) {
+      currentIndex++;
+      runTest();
+    } else {
+      showSlide(slideInfo);
+    }
+  }
 });
