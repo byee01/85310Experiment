@@ -1,4 +1,6 @@
 var source = {};
+var userData = {};
+userData.rawData = [];
 
 source.WORDS = {
   transportation: [
@@ -180,13 +182,39 @@ function getRandomSlides(wordSource, picSource) {
   return randomizeSet(tempWords.concat(tempPics), false, false);
 }
 
+function processTestInput(event) {
+  var userInput = [];
+
+  var formInputs = [
+    $('#td-input-top-1'),
+    $('#td-input-top-2'),
+    $('#td-input-top-3'),
+    $('#td-input-bottom-1'),
+    $('#td-input-bottom-2'),
+    $('#td-input-bottom-3'),
+  ];
+
+  // First, grab all the inputs
+  // Save them to user data
+  // Then clear it
+  for (var i = 0; i < formInputs.length; i++) {
+    userInput.push(formInputs[i].val());
+    formInputs[i].val('');
+  }
+}
 
 $(document).ready(function() {
   var slideMain = $('#test-slide');
   var slideInput = $('#input-slide');
 
+  var inputButton = $('#input-form-submit');
+  inputButton.live('click', function() {
+    processTestInput();
+  });
+
   slideMain.hide();
 
   var sourceArray = getRandomSlides(source.WORDS, source.PICS);
-  console.log(sourceArray);
+  //console.log(sourceArray);
+  userData.sourceData = sourceArray;
 });

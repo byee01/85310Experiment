@@ -8,10 +8,6 @@ html, body, #container, #main, .slide, table {
    color: #111;
 }
 
-p span {
-   color: #444;
-   font-size: 0.85em;
-}
 
 /* =============================================================================
    Test Styles
@@ -38,21 +34,48 @@ p span {
    Input Form
    ========================================================================== */
 #input-form-instruction {
-   width: 500px;   
-   height: 100px;
+   width: 400px;   
+   height: 60px;
+   padding-top: 10px;
    position: absolute;
    text-align: center;
-   font-size: 2em;
+   font-size: 1.5em;
    left: 50%;
    top: 50%;
-   margin-left: -250px;
-   margin-top: -50px;
+   margin-left: -200px;
+   margin-top: -35px;
    border: 1px solid #AAA;
    background: rgba(255,255,255,0.5);
+   overflow: hidden;
+
+  -webkit-transition: all 0.3s ease-in;
+  -moz-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
 }
 
-#input-form-instruction p {
-   margin: 0.5em;
+#input-form-instruction a {
+   text-decoration: none;
+   color: #111;
+   height:120px;
+   display: block;
+   margin-top: 0;
+}
+
+#input-form-instruction a span.subtitle {
+   color: #444;
+   font-size: 0.85em;
+}
+
+#input-form-instruction a span.special {
+   margin-top: 2em;
+}
+
+#input-form-instruction:hover {
+   background: #00bf00;
+}
+
+#input-form-instruction:hover a {
+   margin-top: -60px;
 }
 
 #input-slide {
