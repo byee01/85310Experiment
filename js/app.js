@@ -242,7 +242,7 @@ $(document).ready(function() {
   var slideBlank = new Slide($('#blank-slide'));
   var slideResults = new Slide($('#results-slide'));
 
-  slideList.push(slideMain, slideInput, slideInfo); // Add slides to our slidelist so we can keep track of it.
+  slideList.push(slideMain, slideInput, slideInfo, slideBlank, slideResults); // Add slides to our slidelist so we can keep track of it.
 
  // slideInput.hideSlide();
 
@@ -266,12 +266,38 @@ $(document).ready(function() {
       setTimeout(function(){ 
         showSlide(slideInput)
       }, 1000);
-    }, 3000);
+    }, 500);
   }
 
   function endTest() {
     showSlide(slideResults);
-    console.log(userData());
+    processUserData();
+  }
+
+  function processUserData(){
+    var result = '<table id="results-table">';
+    for (var i = 0; i < userData.rawData.length; i++) {
+      result += '<tr class="results-card">';
+
+      result += '<td>' + userData.sourceData[i][0] + '</td>';
+
+      result += '<td>';
+
+      result += '<table class="results-small">';
+
+      for (var j = 0; j < 6; j++) {
+        result += '<tr><td class="results-resp">' + userData.rawData[i][0][j] + '</td>';
+        result += '<td class="results-orig">' + userData.rawData[i][1][j+1] + '</td></tr>';
+      }
+
+      result += '</table>';
+
+      result += '</td>';
+      result += '</tr>';
+    }
+    result += '</table>';
+
+    $('#results-slide').append(result);
   }
 
   function processTestInput(source) {
@@ -298,7 +324,10 @@ $(document).ready(function() {
     console.log(userData);
 
     // Advance the slide
-    if (currentIndex < slideList.length - 1) {
+    // Number of slides to test - normally
+    // you would want userData.sourceData.length
+    // if (currentIndex < slideList.length - 1) {
+    if (currentIndex < 2) {
       currentIndex++;
       runTest();
     } else {
