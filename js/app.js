@@ -104,7 +104,7 @@ source.PICS = {
     'Scissors',
     'Comb',
     'Toothbrush',
-    'Bottle'
+    'Soap'
   ],
 
   food: [
@@ -122,7 +122,7 @@ source.PICS = {
     'Screwdriver',
     'Drill',
     'Shovel',
-    'Sponge',
+    'Brush',
     'Hammer',
     'Ladder'
   ],
@@ -178,8 +178,8 @@ function showSlide(targetSlide) {
 // Returns the word lowercased + .jpg
 // Test by: console.log(getURL(source.PICS.transportation[0]) == 'car.jpg');
 function createPic(word) {
-  //return '<img src="images/' + word.toLowerCase() + '.jpg"/>';
-  return word.toLowerCase() + '.jpg'
+  return '<img width="200" height="200" src="img/' + word.toLowerCase() + '.jpg"/>';
+  //return '<div class="thumbnail" style="background-image: url(img/' + word.toLowerCase() + '.jpg)" />'
 }
 
 // Returns a new array of a random permutation of the set based off of the Fisher-Yates algo
@@ -287,7 +287,7 @@ $(document).ready(function() {
 
       for (var j = 0; j < 6; j++) {
         result += '<tr><td class="results-resp">' + userData.rawData[i][0][j] + '</td>';
-        result += '<td class="results-orig">' + userData.rawData[i][1][j+1] + '</td></tr>';
+        result += '<td class="results-orig">' + userData.sourceData[i][j+1] + '</td></tr>';
       }
 
       result += '</table>';
@@ -327,7 +327,7 @@ $(document).ready(function() {
     // Number of slides to test - normally
     // you would want userData.sourceData.length
     // if (currentIndex < slideList.length - 1) {
-    if (currentIndex < 2) {
+    if (currentIndex < userData.sourceData.length-1) {
       currentIndex++;
       runTest();
     } else {
